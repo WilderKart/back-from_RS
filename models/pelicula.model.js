@@ -1,3 +1,4 @@
+// Definición del modelo Pelicula y sus asociaciones N:M
 module.exports = (sequelize, DataTypes) => {
   const Pelicula = sequelize.define("Pelicula", {
     id: {
@@ -10,40 +11,41 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     titulo_original: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(255)
     },
     ano_estreno: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     pais: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(100)
     },
     duracion: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     sinopsis: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     trailer_url: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     imagen_portada: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     calificacion: {
-      type: DataTypes.DECIMAL(2, 1),
+      type: DataTypes.DECIMAL(2, 1)
     },
     fecha_estreno: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATEONLY
     },
     fecha_creacion: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     }
   }, {
     tableName: "peliculas",
     timestamps: false
   });
 
+  // Asociaciones N:M con modelos relacionados
   Pelicula.associate = (models) => {
     Pelicula.belongsToMany(models.Actor, {
       through: models.PeliculaActor,
@@ -51,24 +53,28 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: "id_actor",
       as: "actores"
     });
+
     Pelicula.belongsToMany(models.Director, {
       through: models.PeliculaDirector,
       foreignKey: "id_pelicula",
       otherKey: "id_director",
       as: "directores"
     });
+
     Pelicula.belongsToMany(models.Compania, {
       through: models.PeliculaCompania,
       foreignKey: "id_pelicula",
       otherKey: "id_compania",
       as: "companias"
     });
+
     Pelicula.belongsToMany(models.Genero, {
       through: models.PeliculaGenero,
       foreignKey: "id_pelicula",
       otherKey: "id_genero",
       as: "generos"
     });
+
     Pelicula.belongsToMany(models.Idioma, {
       through: models.PeliculaIdioma,
       foreignKey: "id_pelicula",

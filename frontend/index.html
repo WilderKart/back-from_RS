@@ -1,50 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>REELSTORM</title>
-    <link rel="stylesheet" href="./css/principal.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REELSTORM</title>
+  <link rel="stylesheet" href="./css/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">REEL<span class="highlight">STORM</span></div>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">REEL<span class="highlight">STORM</span></div>
 
-        <nav class="navbar">
-            <ul>
-                <li><a href="#">En Cartelera</a></li>
-                <li><a href="#">Lanzamientos</a></li>
-                <li><a href="#">Género</a></li>
-                <li><a href="#">Año</a></li>
-                <li><a href="#">Calificación</a></li>
-            </ul>
-        </nav>
+    <nav class="navbar">
+      <ul>
+        <li><a href="#">En Cartelera</a></li>
+        <li><a href="#">Lanzamientos</a></li>
+        <li><a href="#">Género</a></li>
+        <li><a href="#">Año</a></li>
+        <li><a href="#">Calificación</a></li>
+      </ul>
+    </nav>
 
-        <button class="btn-admin" onclick="mostrarLogin()">Admin</button>
-    </header>
+    <button class="btn-admin" onclick="mostrarLogin()">Admin</button>
+  </header>
 
-    <!-- Modal Login -->
-    <div id="modal-login" class="modal">
-        <div class="modal-content">
-            <span class="cerrar" onclick="cerrarLogin()">&times;</span>
-            <h2>Inicio de sesión administrador</h2>
-            <form id="form-login">
-                <input type="text" id="usuario" placeholder="Usuario" required />
-                <input type="password" id="password" placeholder="Contraseña" required />
-                <button type="submit">Ingresar</button>
-            </form>
-            <p id="error-login"></p>
-        </div>
+  <!-- 🔍 Barra de búsqueda -->
+  <section class="busqueda-section">
+    <form id="form-busqueda">
+      <input type="text" id="campo-busqueda" placeholder="Buscar películas por nombre, género, actor, etc.">
+      <button type="submit"><i class="fas fa-search"></i> Buscar</button>
+    </form>
+  </section>
+
+  <!-- 🎞️ Tráiler de Titanes del Pacífico -->
+  <section class="trailer-principal">
+    <div id="trailer-container"></div>
+  </section>
+
+  <!-- 🎬 Resultados de búsqueda -->
+  <section id="resultados-busqueda" class="movie-cards-container"></section>
+
+  <!-- 🔐 Modal Login -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <span class="cerrar" onclick="cerrarLogin()">&times;</span>
+      <h2>Inicio de sesión administrador</h2>
+      <form id="form-login">
+        <input type="text" id="usuario" placeholder="Usuario" required />
+        <input type="password" id="password" placeholder="Contraseña" required />
+        <button type="submit">Ingresar</button>
+      </form>
+      <p id="error-login"></p>
     </div>
+  </div>
 
+  <!-- JS principal -->
+  <script>
+    document.getElementById('form-busqueda').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const query = document.getElementById('campo-busqueda').value.trim();
+      if (!query) return;
 
+      fetch(`http://localhost:3000/api/busqueda?q=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(peliculas => {
+          const container = document.getElementById('resultados-busqueda');
+          container.innerHTML = "";
 
-    <script src="./js/index.js"></script>
+          if (peliculas.length === 0) {
+            container.innerHTML = "<p style='color: white;'>No se encontraron resultados.</p>";
+            return;
+          }
+
+          peliculas.forEach(pelicula => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.innerHTML = `
+              <img src="${pelicula.imagen_url}" alt="${pelicula.titulo}">
+              <div class="card-body">
+                <h5 class="card-title">${pelicula.titulo}</h5>
+              </div>
+            `;
+
+            card.addEventListener('click', () => {
+              window.location.href = `detalle.html?id=${pelicula.id}`;
+            });
+
+            container.appendChild(card);
+          });
+        })
+        .catch(err => {
+          console.error("Error en la búsqueda:", err);
+        });
+    });
+  </script>
+
+  <script src="./js/index.js"></script>
 </body>
 
 </html>

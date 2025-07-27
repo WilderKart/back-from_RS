@@ -130,3 +130,90 @@ body {
   font-size: 24px;
   color: #fff;
 }
+
+/* Búsqueda */
+.busqueda-section {
+  padding: 20px;
+  text-align: center;
+  background-color: var(--dark);
+}
+
+#form-busqueda {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#campo-busqueda {
+  padding: 12px;
+  width: 50%;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#form-busqueda button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: var(--darker);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#form-busqueda button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Tráiler */
+.trailer-principal {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.trailer-principal iframe {
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  height: 500px;
+  border: none;
+}
+
+.movie-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.movie-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  width: 220px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  transform: scale(1.03);
+}
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+}
+
+.movie-card .card-body {
+  padding: 10px;
+  color: #fff;
+}
+
+.movie-card .card-title {
+  font-size: 18px;
+  font-weight: bold;
+}

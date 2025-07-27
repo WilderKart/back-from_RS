@@ -77,3 +77,34 @@ exports.delete = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+// Buscar películas por texto
+exports.buscar = async (req, res) => {
+  const { query } = req.query;
+
+  try {
+    const db = require("../models"); // Asegura acceso a Sequelize y relaciones
+
+    const peliculas = await db.Pelicula.findAll({
+      where: {
+        [db.Sequelize.Op.or]: [
+          { titulo_espanol: { [db.Sequelize.Op.iLike]: `%${query}%` } },
+          { sinopsis: { [db.Sequelize.Op.iLike]: `%${query}%` } }
+        ]
+      },
+      include: [
+        { association: "actores" },
+        { association: "directores" },
+        { association: "companias" },
+        { association: "generos" },
+        { association: "idiomas" }
+      ]
+    });
+
+    res.json(peliculas);
+  } catch (err) {
+    console.error("❌ Error al buscar películas:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

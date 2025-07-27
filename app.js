@@ -15,6 +15,7 @@ const peliculaCompaniaRoutes = require("./routes/pelicula_compania.route");
 const peliculaIdiomaRoutes = require("./routes/pelicula_idioma.route");
 const peliculaGeneroRoutes = require("./routes/pelicula_genero.routes");
 const adminRoutes = require('./routes/admin.routes');
+const busquedaRoutes = require('./routes/busqueda.routes');
 
 const app = express();
 app.get("/", (req, res) => {
@@ -37,6 +38,7 @@ app.use("/api/pelicula-compania", peliculaCompaniaRoutes);
 app.use("/api/pelicula-idioma", peliculaIdiomaRoutes);
 app.use("/api/pelicula-genero", peliculaGeneroRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/busqueda", busquedaRoutes);
 
 // Sincroniza base de datos
 // db.sequelize.sync().then(() => {
