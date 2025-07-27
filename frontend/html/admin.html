@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador - REELSTORM</title>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <h1><span class="logo-orange">REEL</span><span class="logo-white">STORM</span> <small>Admin Panel</small></h1>
+  </header>
+
+  <main class="admin-container">
+    <section class="form-section">
+      <h2>Agregar / Editar Película</h2>
+      <form id="form-pelicula">
+        <input type="hidden" id="id" />
+        <input type="text" id="titulo_espanol" placeholder="Título en español" required>
+        <input type="text" id="titulo_original" placeholder="Título original">
+        <input type="number" id="ano_estreno" placeholder="Año de estreno">
+        <input type="text" id="pais" placeholder="País">
+        <input type="number" id="duracion" placeholder="Duración (min)">
+        <textarea id="sinopsis" placeholder="Sinopsis"></textarea>
+        <input type="text" id="trailer_url" placeholder="URL del tráiler">
+        <input type="text" id="imagen_portada" placeholder="URL de imagen">
+        <input type="number" step="0.1" id="calificacion" placeholder="Calificación">
+        <button type="submit">Guardar Película</button>
+      </form>
+    </section>
+
+    <section class="tabla-section">
+      <h2>Películas Registradas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-peliculas"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>

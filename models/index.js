@@ -29,6 +29,8 @@ db.Director = require("./director.model")(sequelize, DataTypes);
 db.Compania = require("./compania.model")(sequelize, DataTypes);
 db.Genero = require("./genero.model")(sequelize, DataTypes);
 db.Idioma = require("./idioma.model")(sequelize, DataTypes);
+db.Administrador = require("./administrador.model")(sequelize, DataTypes);
+
 
 // Modelos intermedios para relaciones muchos a muchos (N:N)
 db.PeliculaActor = require("./pelicula_actor.model")(sequelize, DataTypes);
